@@ -34,12 +34,12 @@ azure servicefabric cluster connect $SERVICEFABRICCLUSTER
 echo "================================================="
 echo "Step 3:  Copy to ImageStore"
 echo "================================================="
-azure servicefabric application package copy dhclient fabric:ImageStore
+azure servicefabric application package copy dhnotification fabric:ImageStore
 [ $? -eq 0 ] || { echo "Failed to copy to ImageStore, Exiting..."; exit 1; }
 echo "================================================="
 echo "Step 4:  Register Application"
 echo "================================================="
-azure servicefabric application type register dhclient
+azure servicefabric application type register dhnotification
 [ $? -eq 0 ] || { echo "Failed to register application, Exiting..."; exit 1; }
 echo "================================================="
 echo "Step 5:  Create Application"
