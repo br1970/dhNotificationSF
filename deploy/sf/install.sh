@@ -41,9 +41,8 @@ echo "Step 4:  Register Application"
 echo "================================================="
 azure servicefabric application type register dhnotification
 [ $? -eq 0 ] || { echo "Failed to register application, Exiting..."; exit 1; }
-#echo "================================================="
-#echo "Step 5:  Create Application"
-#echo "================================================="
-#azure servicefabric application create fabric:/dh dreamhomesf $BUILD_BUILDNUMBER
-#[ $? -eq 0 ] || { echo "Failed to create application, Exiting..."; exit 1; }
-# test
+echo "================================================="
+echo "Step 5:  Create Application"
+echo "================================================="
+azure servicefabric application upgrade start fabric:/dh dreamhomesf $BUILD_BUILDNUMBER
+[ $? -eq 0 ] || { echo "Failed to create application, Exiting..."; exit 1; }
