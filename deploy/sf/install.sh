@@ -21,7 +21,7 @@ sed -i "/<CodePackage.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/"
 [ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
 echo "---Updating CodePackage Completed"
 echo "---Updating ImageName.."
-sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>knizami\/dhnotification:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhNotification/ServiceManifest.xml
+sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>balduino\/dhnotificationsf:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhNotification/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update ImageName, Exiting..."; exit 1; }
 echo "---Updating ImageName Completed"
 echo "================================================="
@@ -44,5 +44,5 @@ azure servicefabric application type register dhnotification
 echo "================================================="
 echo "Step 5:  Create Application"
 echo "================================================="
-azure servicefabric application upgrade start --application-name fabric:/dh dreamhomesf $BUILD_BUILDNUMBER
+azure servicefabric application create fabric:/dh dreamhomesf_ $BUILD_BUILDNUMBER
 [ $? -eq 0 ] || { echo "Failed to create application, Exiting..."; exit 1; }
