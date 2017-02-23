@@ -14,10 +14,11 @@
       </ContainerHost>
     </EntryPoint>
     <EnvironmentVariables></EnvironmentVariables>
-    <Resources>
-      <Endpoints>
-        <Endpoint Name="dhNotificationEndpoint" Protocol="http" Port="8082" />
-      </Endpoints>
-    </Resources>
   </CodePackage>
+  <Resources>
+    <Endpoints>
+      <Endpoint Name="dhNotificationEndpoint" Protocol="http" Port="8082" />
+    </Endpoints>
+  </Resources>
+
 </ServiceManifest>
