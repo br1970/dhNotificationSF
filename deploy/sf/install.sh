@@ -44,5 +44,5 @@ azure servicefabric application type register dhnotification
 echo "================================================="
 echo "Step 5:  Create Application"
 echo "================================================="
-azure servicefabric application create fabric:/dh1 dreamhomesf1 $BUILD_BUILDNUMBER
+azure servicefabric application create fabric:/dh dreamhomesf1 $BUILD_BUILDNUMBER
 [ $? -eq 0 ] || { echo "Failed to create application, Exiting..."; exit 1; }
