@@ -17,7 +17,7 @@
   </CodePackage>
   <Resources>
     <Endpoints>
-      <Endpoint Name="dhNotificationEndpoint" Protocol="http" Port="8082" />
+      <Endpoint Name="WebEndpoint" Protocol="http" Port="8082" />
     </Endpoints>
   </Resources>
 
