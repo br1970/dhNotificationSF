@@ -45,5 +45,5 @@ azure servicefabric application type register dhnotification
 echo "================================================="
 echo "Step 5:  Create Application"
 echo "================================================="
-azure servicefabric application upgrade start --application-name fabric:/dh2 --target-application-type-version $BUILD_BUILDNUMBER --rolling-upgrade-mode Monitored
+azure servicefabric application upgrade start --application-name fabric:/dh --target-application-type-version $BUILD_BUILDNUMBER --rolling-upgrade-mode Monitored
 [ $? -eq 0 ] || { echo "Failed to create application, Exiting..."; exit 1; }
