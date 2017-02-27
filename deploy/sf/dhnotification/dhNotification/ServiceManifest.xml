@@ -20,5 +20,4 @@
       <Endpoint Name="WebEndpoint" Protocol="http" Port="8082" />
     </Endpoints>
   </Resources>
-
 </ServiceManifest>

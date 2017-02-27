@@ -1,12 +1,12 @@
 //-----------------------------------------------------------------------------
-// Name:       DreamHome.Notification Service                                   
-//                                                                              
-// Purpose:    Microservice                                                     
-//                                                                              
-// Interfaces: MongoDB database                                                 
-//                                                                              
-// Author:     Sal Carceller                                                    
-//                                                                              
+// Name:       DreamHome.Notification Service
+//
+// Purpose:    Microservice
+//
+// Interfaces: MongoDB database
+//
+// Author:     Sal Carceller
+//
 //-----------------------------------------------------------------------------
 var http         = require('http');
 var url          = require('url');
@@ -14,20 +14,20 @@ var express      = require('express');
 var bodyParser   = require('body-parser');
 var request      = require('request');
 var mongoClient  = require('mongodb').MongoClient;
-var helper       = require('./dhCommon/helpers'); // include helper functions from helpers.js
+var helper       = require('./helpers'); // include helper functions from helpers.js
 
 //-----------------------------------------------------------------------------
-// Set up express                                    
+// Set up express
 var app = express();
 var server = http.createServer(app);
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json()); // for parsing application/json
 //-----------------------------------------------------------------------------
 
-var _port = process.env.DHNOTIFICATION_SERVICE_PORT || 8082;       // port to listen on
+var _port = 8082;       // port to listen on
 
 //-----------------------------------------------------------------------------
-// return code definitions, used in json responses {"RC": _rcOK}  
+// return code definitions, used in json responses {"RC": _rcOK}
 var _rcOK      = 0;
 var _rcWarning = 1;
 var _rcError   = 2;
@@ -37,7 +37,7 @@ var _rcUnknown = 99;
 // global refs to the db and the Notification collection
 var _dbConnected      = false;
 var _dbref            = null;
-var _crefNotification = null; 
+var _crefNotification = null;
 
 //-----------------------------------------------------------------------------
 // Main code body
@@ -49,7 +49,7 @@ console.log("DreamHome.Notification ==> Begin Execution");
 helper.dbInit( function(err)
 {
   if(!err)
-  { // DB connections have been established. 
+  { // DB connections have been established.
     _dbref            = helper.dbref();            // save the refrence handle to the db
     _crefNotification = helper.crefNotification(); // save the refrence handle to the Notification collection
 
@@ -77,7 +77,7 @@ helper.dbInit( function(err)
 // resets the notification collection
 // deletes all records from the collection
 //-----------------------------------------------------------------------------
-app.get('/reset', function (req, res) 
+app.get('/reset', function (req, res)
 {
   var retjson = {"RC":_rcOK};      // assume a good json response
   var statusCode = 200;            // assume valid http response code=200 (OK, good response)
@@ -105,15 +105,15 @@ app.get('/reset', function (req, res)
 });
 
 //-----------------------------------------------------------------------------
-// Sends a notification to an agent and writes it to the mongoDB           
+// Sends a notification to an agent and writes it to the mongoDB
 // Notification JSON record format is:
 // { "_id":580e196acced882d43d4a286, "notificationId":1001, "agentId":1001, "clientId":1003 }
-// 
+//
 // syntax examples:
 //   /notify?clientId=1001,agentId=1001
 //   /notify?clientId=1001
 //-----------------------------------------------------------------------------
-app.get('/notify', function (req, res) 
+app.get('/notify', function (req, res)
 {
    var retjson = {"RC":_rcOK};      // assume a good json response
    var statusCode = 200;            // assume valid http response code=200 (OK, good response)
@@ -149,7 +149,7 @@ app.get('/notify', function (req, res)
            jsonRecord = { notificationId:pkId, agentId:agentId, clientId:clientId};
            _crefNotification.insertOne( jsonRecord, {w:1, j:true},
            function(err,result)
-           { 
+           {
              if(!err)
              {
                retjson.success  = "Agent has been notified, client should get a response shortly.";
@@ -183,7 +183,7 @@ app.get('/notify', function (req, res)
        retjson = {};
        retjson.RC = _rcError;
        retjson.error = "Missing or bad parms, valid syntax: .../notify?agentId=1001&clientId=1001";
-    
+
        // set http status code
        statusCode = 400;
 
@@ -208,10 +208,10 @@ app.get('/notify', function (req, res)
 //-----------------------------------------------------------------------------
 // Search for notification records within the notification collection in MongoDB
 // syntax examples:
-//   /search                                get all records 
-//   /search?query={"clientId":1003}        get records by clientID 
-//   /search?query={"agentId":1001}         get records by agentID 
-//   /search?query={"notificationId":1001}  get records by notificationID 
+//   /search                                get all records
+//   /search?query={"clientId":1003}        get records by clientID
+//   /search?query={"agentId":1001}         get records by agentID
+//   /search?query={"notificationId":1001}  get records by notificationID
 //-----------------------------------------------------------------------------
 app.get('/search', function (req, res)
 {
@@ -237,10 +237,10 @@ app.get('/search', function (req, res)
      }
 
      // fetch records from the notification collection based on the query desired.
-     _crefNotification.find(dbQuery).toArray( function(err, items) 
+     _crefNotification.find(dbQuery).toArray( function(err, items)
      {
         retjson = items;
-    
+
         // send the http response message
         helper.httpJsonResponse(res,statusCode,retjson);
      });
@@ -259,7 +259,7 @@ app.get('/search', function (req, res)
 });
 
 //-----------------------------------------------------------------------------
-// Checks if we are connected to the DB and reports list of all collections           
+// Checks if we are connected to the DB and reports list of all collections
 //-----------------------------------------------------------------------------
 app.get('/dbConnected', function(req, res)
 {
@@ -270,13 +270,13 @@ app.get('/dbConnected', function(req, res)
   if(_dbConnected==true)
   { // connected to the DB
     retjson.success = "Succesfully connected to the DB.";
-  
+
     // Let's fetch the list of collections currently stored in the DB
-    _dbref.listCollections().toArray(function(err, items) 
+    _dbref.listCollections().toArray(function(err, items)
     {
       // add the list of collections found to the return JSON
       retjson.collections = items;
-  
+
       // send the http response message
       helper.httpJsonResponse(res,statusCode,retjson);
     });
@@ -286,7 +286,7 @@ app.get('/dbConnected', function(req, res)
     retjson.RC = _rcError;
     retjson.error = "ERROR: we are not connected to the DB!";
     statusCode = 500;  // internal error while connecting to the DB
-  
+
     // send the http response message
     helper.httpJsonResponse(res,statusCode,retjson);
   }
@@ -297,7 +297,7 @@ app.get('/dbConnected', function(req, res)
 //-----------------------------------------------------------------------------
 // Simple echo get method, used to sanity test service
 //-----------------------------------------------------------------------------
-app.get('/echo', function (req, res) 
+app.get('/echo', function (req, res)
 {
   console.log("app.get(./echo function has been called.");
 
@@ -315,12 +315,12 @@ app.get('/echo', function (req, res)
 //-----------------------------------------------------------------------------
 // some testing methods, used to sanity test service
 //-----------------------------------------------------------------------------
-app.get('/test', function (req, res) 
+app.get('/test', function (req, res)
 {
   console.log("app.get(./test function has been called.");
 
   // test code
-  helper.genClientId( 
+  helper.genClientId(
   function(err,pkId)
   {
       console.log("app.get(./test function pkId:" + pkId);
@@ -347,13 +347,13 @@ app.get('/test', function (req, res)
   return;
 });
 
-app.get('/test2', function (req, res) 
+app.get('/test2', function (req, res)
 {
   console.log("app.get(./test2 function has been called.");
 
   // force the Counter collection to be dropped (deleted)
   helper.crefCounter().drop(
-  function(err, reply) 
+  function(err, reply)
   {
      var retjson = {"RC":_rcOK};      // assume a good json response
      var statusCode = 200;            // assume valid http response code=200 (OK, good response)
@@ -378,7 +378,7 @@ app.get('/test2', function (req, res)
 });
 
 // test put function
-app.post('/test3', function (req, res) 
+app.post('/test3', function (req, res)
 {
   console.log("app.post(./test3 function has been called.");
 
@@ -387,7 +387,7 @@ app.post('/test3', function (req, res)
 
   // get the body for the put request
   var body = [];
-  req.on('data', function(chunk) 
+  req.on('data', function(chunk)
   {
     body.push(chunk);
   }).on('end', function()
