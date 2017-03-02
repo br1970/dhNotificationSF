@@ -17,7 +17,8 @@ echo "---Updating ServiceManifest.."
 sed -i "/<ServiceManifest.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/" dhnotification/dhNotification/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
 sed -i "/<ServiceManifest.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/" dhnotification/dhClient/ServiceManifest.xml
-[ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }echo "---Updating ServiceManifest Completed"
+[ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
+echo "---Updating ServiceManifest Completed"
 echo "---Updating CodePackage.."
 sed -i "/<CodePackage.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/" dhnotification/dhNotification/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
