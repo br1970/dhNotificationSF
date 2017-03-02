@@ -14,15 +14,21 @@ sed -i "/<ServiceManifestRef.*ServiceManifestVersion/s/ServiceManifestVersion=\"
 [ $? -eq 0 ] || { echo "Failed to update ServiceManifestRef, Exiting..."; exit 1; }
 echo "Updating ServiceManifestRef Completed"
 echo "---Updating ServiceManifest.."
+sed -i "/<ServiceManifest.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/" dhnotification/dhClient/ServiceManifest.xml
+[ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
 sed -i "/<ServiceManifest.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/" dhnotification/dhNotification/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
 echo "---Updating ServiceManifest Completed"
 echo "---Updating CodePackage.."
+sed -i "/<CodePackage.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/" dhnotification/dhClient/ServiceManifest.xml
+[ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
 sed -i "/<CodePackage.*Version/s/Version=\".*\"/Version=\"$BUILD_BUILDNUMBER\"/" dhnotification/dhNotification/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update CodePackage, Exiting..."; exit 1; }
 echo "---Updating CodePackage Completed"
 echo "---Updating ImageName.."
-sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>balduino\/dhnotificationsf:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhNotification/ServiceManifest.xml
+sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>balduino\/dhclientsf:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhClient/ServiceManifest.xml
+[ $? -eq 0 ] || { echo "Failed to update ImageName, Exiting..."; exit 1; }
+sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>balduino\/dhclientsf:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhNotification/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update ImageName, Exiting..."; exit 1; }
 echo "---Updating ImageName Completed"
 echo "================================================="
@@ -47,3 +53,4 @@ echo "Step 5:  Create Application"
 echo "================================================="
 azure servicefabric application upgrade start --application-name fabric:/dh --target-application-type-version $BUILD_BUILDNUMBER --rolling-upgrade-mode Monitored
 [ $? -eq 0 ] || { echo "Failed to create application, Exiting..."; exit 1; }
+#
