@@ -28,7 +28,7 @@ echo "---Updating CodePackage Completed"
 echo "---Updating ImageName.."
 sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>balduino\/dhclientsf:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhClient/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update ImageName, Exiting..."; exit 1; }
-sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>balduino\/dhclientsf:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhNotification/ServiceManifest.xml
+sed -i "s/<ImageName>.*<\/ImageName>/<ImageName>balduino\/dhnotificationtsf:$BUILD_BUILDNUMBER<\/ImageName>/" dhnotification/dhNotification/ServiceManifest.xml
 [ $? -eq 0 ] || { echo "Failed to update ImageName, Exiting..."; exit 1; }
 echo "---Updating ImageName Completed"
 echo "================================================="
