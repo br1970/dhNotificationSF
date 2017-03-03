@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Name:       DreamHome.Notification Service
+// Name:       dhNotification Service
 //
 // Purpose:    Microservice
 //
@@ -42,7 +42,7 @@ var _crefNotification = null;
 //-----------------------------------------------------------------------------
 // Main code body
 //-----------------------------------------------------------------------------
-console.log("DreamHome.Notification ==> Begin Execution");
+console.log("dhNotification ==> Begin Execution");
 
 // wait for DB module to fully initialize and connect to the backend DB
 // we don't want to start the node.js server listening till we know we are fully connected to the DB
@@ -305,7 +305,7 @@ app.get('/echo', function (req, res)
   var statusCode = 200;            // assume valid http response code=200 (OK, good response)
 
   // send the http response message
-  retjson.success = "Echo from DreamHome.Notification service!";
+  retjson.success = "Echo from dhNotification service!";
   res.status(statusCode).json(retjson);
   res.end;
 
