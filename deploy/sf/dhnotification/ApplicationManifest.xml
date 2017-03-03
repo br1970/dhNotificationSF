@@ -8,19 +8,19 @@
       <Parameter Name="dhnotification_InstanceCount" DefaultValue="1" />
     </Parameters>
     <ServiceManifestImport>
-        <ServiceManifestRef ServiceManifestName="dhClient" ServiceManifestVersion="1.0.0" />
-    </ServiceManifestImport>
-    <ServiceManifestImport>
         <ServiceManifestRef ServiceManifestName="dhNotification" ServiceManifestVersion="1.0.0" />
     </ServiceManifestImport>
+    <ServiceManifestImport>
+        <ServiceManifestRef ServiceManifestName="dhClient" ServiceManifestVersion="1.0.0" />
+    </ServiceManifestImport>
     <DefaultServices>
-      <Service Name="dhClient">
-          <StatelessService ServiceTypeName="dhclientType" InstanceCount="[dhclient_InstanceCount]">
+      <Service Name="dhNotification">
+          <StatelessService ServiceTypeName="dhnotificationType" InstanceCount="[dhnotification_InstanceCount]">
               <SingletonPartition />
           </StatelessService>
       </Service>
-      <Service Name="dhNotification">
-          <StatelessService ServiceTypeName="dhnotificationType" InstanceCount="[dhnotification_InstanceCount]">
+      <Service Name="dhClient">
+          <StatelessService ServiceTypeName="dhclientType" InstanceCount="[dhclient_InstanceCount]">
               <SingletonPartition />
           </StatelessService>
       </Service>
